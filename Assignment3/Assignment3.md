@@ -216,7 +216,7 @@ The OS is a Windows 10, 64-bit OS, executing on an x86-64/AMD64 processor. The p
 >- running processes, network connections, ... 
 >- are all the browsers the same?
 
-The login process started around "2023-01-09 21:47:12..21:47:19" local time. The time at which the dump was taken is "2023-01-09 22:16:52". The following applications were started after login:
+The login process started around "2023-01-09 21:47:12..21:47:19" local time. The time at which the dump was taken is "2023-01-09 22:16:52". The user `NotSurface/Spongebob` started the following applications after login:
 
 - MS Edge browser, `msedge.exe`
 - Firefox, `firefox.exe`, in regular mode, and as a Tor browser
