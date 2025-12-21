@@ -16,17 +16,16 @@ https://cdimage.ubuntu.com/lubuntu/releases/noble/release/lubuntu-24.04.3-deskto
 ## Generate a Memory Dump of an Operating System
 > Your ﬁrst task is to demonstrate your overall forensic capabilities and acquire a RAM dump of an operating system of your choosing!
 
-After the installation, the VM is started, the default user is logged in. Thereafter, the memory dump can be extracted to `lubuntu-core.dump` using the `VBoxManage.exe` tool on the Windows host system:
+After the installation of "lubuntu2402new", the VM is started, the default user is logged in. In a shell, the application `c_crypto_prot` is started. It opens a UDP socket on `127.0.0.1`, the localport number being `4200`. This is the artifact to look for in the memory dump.
+
+![c_crypto_prot_gdb](c_crypto_prot_gdb.png)
+
+In the next step, the memory dump can be extracted to `lubuntu-core.dump` using the `VBoxManage.exe` tool on the Windows host system:
 
 ```cmd
 "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" list vms
 "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" debugvm "lubuntu2402new" dumpvmcore --filename lubuntu-core.dump
 ```
-
-While the (memory) dump was taken, one process was executing a `c_crypto_prot` application, which opens a UDP socket on `127.0.0.1`, the localport number being `4200`, as shown in the debugger output below. This is the artifact to look for in the memory dump:
-
-![c_crypto_prot_gdb](c_crypto_prot_gdb.png)
-
 
 ## Analyze the memory dump
 
@@ -85,7 +84,7 @@ sudo ./dwarf2json linux --elf /usr/lib/debug/boot/vmlinux-6.14.0-37-generic --sy
 The following commands generate the lists of 
 - running processes 
 - running & terminated processes
-- open at the point in time the memory dump was taken:
+- open sockets at the point in time the memory dump was taken:
 
 ```bash
 python3 vol.py -f ~/ernst/lubuntu-core.dump linux.pslist.PsList >linux.pslist.PsList.txt
@@ -138,7 +137,7 @@ In the first step, `volatility3` is used to look for Linux banners, none are fou
 
 ![windows_img_osinfo.png](windows_img_osinfo.png)
 
-`NtMajorVersion = 10` and `NtMinorVersion = 0` indicate Windows 10 / Windows Server 2016+, `Is64Bit True` indicates a 64 bit OS, `PE Machine      34404` and `MachineType     34404` identify the hardware platform running the OS, which is "x86-64/AMD64".
+`NtMajorVersion = 10` and `NtMinorVersion = 0` indicate Windows 10, `Is64Bit True` indicates a 64 bit OS, `PE Machine      34404` and `MachineType     34404` identify the hardware platform running the OS, which is "x86-64/AMD64".
 
 Extracting the `PROCESSOR_IDENTIFIER` environment variables of the executing processes reveals "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD", indicating either a Ryzen 5000‑series desktop processor, or a EPYC Milan processor.
 
@@ -210,7 +209,7 @@ The following questions had to be answered:
 >Questions:
 >- What information can you extract about the operating system?
 
-The OS is a Windows 10 / Windows Server 2016+, 64-bit OS, executing on an x86-64/AMD64 processor. The processor identifies as AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD", indicating either a Ryzen 5000‑series desktop processor, or a EPYC Milan processor. The `VBoxTray.exe` entry in the timeline process list indicates that the OS was installed using a VirtualBox hypervisor.
+The OS is a Windows 10, 64-bit OS, executing on an x86-64/AMD64 processor. The processor identifies as AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD", indicating either a Ryzen 5000‑series desktop processor, or a EPYC Milan processor. The `VBoxTray.exe` entry in the timeline process list indicates that the OS was installed using a VirtualBox hypervisor.
 
 >- What happened at the time of the RAM dump:
 >- e.g., date, time, ...
