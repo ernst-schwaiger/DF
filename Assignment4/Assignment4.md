@@ -27,6 +27,10 @@ The assignment was to analyze the file system state taken from a cellphone owned
 >Where did Heisenberg plan to meet with the owner of the telephone number “+15402993169”? (1 point)  
 >At which time(s) did Heisenberg actively use the Signal app on 2021-07-14? (2 points).
 
+The files for the assignment have been taken from `https://www.dropbox.com/sh/dbteh8q2yd9b71y/AADDklRCztZePLj_pg2Fng0La?dl=0`. Before the analysis started, the SHA-1 checksums were taken from the relevant files and compared with the reference values provided in `Assignment4_Smartphone.pdf`:
+
+![Checksums.png](Checksums.png)
+
 ## Resolving Questions
 
 >Are there clues or evidence for Heisenberg dealing with (stolen) cars? (2 points)  
